@@ -9,6 +9,7 @@ import {Provider} from 'react-redux';
 import {persistor, store} from './src/redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import CartScreen from './src/screens/CartScreen';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -17,6 +18,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <NavigationContainer>
+        <GestureHandlerRootView style={{ flex: 1 }}>
           <Stack.Navigator initialRouteName="Products">
             <Stack.Screen
               options={{headerShown: false}}
@@ -38,6 +40,7 @@ const App = () => {
             />
             <Stack.Screen name='Cart' component={CartScreen} />
           </Stack.Navigator>
+          </GestureHandlerRootView>
         </NavigationContainer>
       </PersistGate>
     </Provider>
