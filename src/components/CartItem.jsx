@@ -33,21 +33,13 @@ const CartItem = ({
 
   const handleCheck = value => {
     setIsChecked(value);
-    //   handleItemTotal({quantity: editedQuantity, price, isChecked: true});
     handleItemTotal({id, isChecked: value})
-
-    if(value){
-        dispatch(ADD_TO_TOTAL(id))
-    } else {
-        dispatch(REMOVE_FROM_TOTAL(id))
-    }
-
   };
 
   const handleQuantity = value => {
     setEditedQuantity(value);
-    // handleItemTotal({id, isChecked})
     dispatch(EDIT_CART_ITEM({id: id, quantity: value}));
+    handleItemTotal({id, isChecked: isChecked})
   };
 
   return (

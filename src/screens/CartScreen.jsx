@@ -7,7 +7,6 @@ import {ADD_ITEM_TO_TOTAL} from '../redux/cartSlice';
 
 const CartScreen = () => {
   const cart = useSelector(state => state.cart.cart);
-  const checkOutItems = useSelector(state => state.cart.checkOutItems);
   const [productQuantity, setProductQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isAllChecked, setIsAllChecked] = useState(false);
@@ -17,33 +16,35 @@ const CartScreen = () => {
     if (isAllChecked) {
       setCheckedCart(cart);
     } else {
-        setCheckedCart([])
+      setCheckedCart([]);
     }
   }, [isAllChecked]);
 
   useEffect(() => {
     let total = 0;
     let quantity = 0;
+
     checkedCart.forEach(item => {
-      total += item.price * item.quantity;
-      quantity += item.quantity;
+      let cartItem = cart.find(cartItem => cartItem.id === item.id);
+      total += cartItem.price * cartItem.quantity;
+      quantity += cartItem.quantity;
     });
 
     setTotalPrice(total);
     setProductQuantity(quantity);
-  }, [checkedCart]);
+  }, [checkedCart, cart]);
 
   const handleCheckedTotal = ({id, isChecked}) => {
-    const itemDetails = cart.find(item => item.id === id);
-    if(isChecked) {
+    const itemIndex = cart.findIndex(item => item.id === id);
+    const itemDetails = cart[itemIndex];
+
+    if (isChecked) {
+      let itemChecked = checkedCart.find(item => item.id === id);
+      !itemChecked && setCheckedCart([...checkedCart, {...itemDetails}]);
+    } else {
+      const removeItemFromCart = checkedCart.filter(item => item.id !== id);
+      setCheckedCart(removeItemFromCart);
     }
-    // if (isChecked) {
-    //   setTotalPrice(totalPrice + itemTotal);
-    //   setProductQuantity(productQuantity + quantity);
-    // } else {
-    //   setTotalPrice(totalPrice - itemTotal);
-    //   setProductQuantity(productQuantity - quantity);
-    // }
   };
 
   const styles = StyleSheet.create({
