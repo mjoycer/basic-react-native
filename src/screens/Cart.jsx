@@ -23,12 +23,12 @@ const CartScreen = () => {
     let total = 0;
     let quantity = 0;
 
-    if(cart.length !== 0) {
-        checkedCart.forEach(item => {
-          let cartItem = cart.find(cartItem => cartItem.id === item.id);
-          total += cartItem.price * cartItem.quantity;
-          quantity += cartItem.quantity;
-        });
+    if (cart.length !== 0) {
+      checkedCart.forEach(item => {
+        let cartItem = cart.find(cartItem => cartItem.id === item.id);
+        total += cartItem.price * cartItem.quantity;
+        quantity += cartItem.quantity;
+      });
     }
 
     setTotalPrice(total);
@@ -55,6 +55,22 @@ const CartScreen = () => {
     },
   });
 
+  const renderItem = ({item}) => {
+    return (
+      <CartItem
+        id={item.id}
+        title={item.title}
+        image={item.image}
+        price={item.price}
+        quantity={item.quantity}
+        isAllChecked={isAllChecked}
+        handleItemTotal={({id, isChecked}) =>
+          handleCheckedTotal({id, isChecked})
+        }
+      />
+    );
+  };
+
   return (
     <View
       style={{
@@ -77,19 +93,7 @@ const CartScreen = () => {
       <View>
         <FlatList
           data={cart}
-          renderItem={({item}) => (
-            <CartItem
-              id={item.id}
-              title={item.title}
-              image={item.image}
-              price={item.price}
-              quantity={item.quantity}
-              isAllChecked={isAllChecked}
-              handleItemTotal={({id, isChecked}) =>
-                handleCheckedTotal({id, isChecked})
-              }
-            />
-          )}
+          renderItem={renderItem}
           keyExtractor={item => item.id}
         />
       </View>

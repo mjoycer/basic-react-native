@@ -14,20 +14,22 @@ const Products = () => {
         });
   }, [])
 
+  const renderItem = ({item}) => {
+    return <ProductItem
+    title={item.title}
+    price={item.price}
+    description={item.description}
+    image={item.images[0]}
+    id={item.id}
+  />
+  }
+
   return (
     <View style={{flex: 1, alignItems: 'center'}}>
       <FlatList
         data={products}
         numColumns={2}
-        renderItem={({item}) => (
-          <ProductItem
-            title={item.title}
-            price={item.price}
-            description={item.description}
-            image={item.images[0]}
-            id={item.id}
-          />
-        )}
+        renderItem={renderItem}
         keyExtractor={item => item.id}
       />
     </View>

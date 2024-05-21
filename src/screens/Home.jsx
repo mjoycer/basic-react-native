@@ -18,7 +18,13 @@ const HomeScreen = () => {
       });
   }, [])
 
+  const renderUsers = ({item}) => {
+    return <Item title={item.name} />
+  }
 
+  const renderPosts = ({item}) => {
+    return <PostItem title={item.title} body={item.body} />
+  }
   const styles = StyleSheet.create({
     navBar: {
       backgroundColor: 'teal',
@@ -48,7 +54,7 @@ const HomeScreen = () => {
         <FlatList
           style={{padding: 10}}
           data={data}
-          renderItem={({item}) => <Item title={item.name} />}
+          renderItem={renderUsers}
           keyExtractor={item => item.id}
         />
       </View>
@@ -56,9 +62,7 @@ const HomeScreen = () => {
         <Text style={styles.sectionHeader}>Posts</Text>
         <FlatList
           data={posts}
-          renderItem={({item}) => (
-            <PostItem title={item.title} body={item.body} />
-          )}
+          renderItem={renderPosts}
           keyExtractor={item => item.id}
         />
       </View>

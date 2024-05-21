@@ -6,15 +6,17 @@ import Products from '../screens/Products';
 
 const Tabs = () => {
   const Tab = createBottomTabNavigator();
+
+  const cartLogo = () => {
+    return <CartLogo size={25} containerStyle={{paddingHorizontal: 10}} />
+  }
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen
         options={{
           headerTitle: 'Products',
-          headerRight: () => (
-            <CartLogo size={25} containerStyle={{paddingHorizontal: 10}} />
-          ),
+          headerRight: cartLogo,
         }}
         name="Shop"
         component={Products}
