@@ -1,28 +1,24 @@
 import {View, Text, FlatList} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import ProductItem from '../components/ProductItem';
+import {useFetch} from '../helpers/api';
+import {constants} from '../constants/url';
 
 const Products = () => {
-  const [products, setProducts] = useState();
-
-  useEffect(() => {
-      axios
-        .get('https://api.escuelajs.co/api/v1/products?offset=0&limit=10')
-        .then(res => {
-          setProducts(res.data);
-        });
-  }, [])
+  const {data: products} = useFetch(constants.PRODUCTS_URL);
 
   const renderItem = ({item}) => {
-    return <ProductItem
-    title={item.title}
-    price={item.price}
-    description={item.description}
-    image={item.images[0]}
-    id={item.id}
-  />
-  }
+    return (
+      <ProductItem
+        title={item.title}
+        price={item.price}
+        description={item.description}
+        image={item.images[0]}
+        id={item.id}
+      />
+    );
+  };
 
   return (
     <View style={{flex: 1, alignItems: 'center'}}>

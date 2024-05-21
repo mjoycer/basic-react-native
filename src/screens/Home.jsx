@@ -1,30 +1,21 @@
 import {View, Text, FlatList, StyleSheet} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import PostItem from '../components/PostItem';
 import Item from '../components/Item';
-import axios from 'axios';
+import {useFetch} from '../helpers/api';
+import { constants } from '../constants/url';
 
 const HomeScreen = () => {
-  const [data, setData] = useState();
-  const [posts, setPosts] = useState();
-
-  useEffect(() => {
-      axios.get('https://jsonplaceholder.typicode.com/users').then(res => {
-        setData(res.data);
-      });
-    
-      axios.get('https://jsonplaceholder.typicode.com/posts').then(res => {
-        setPosts(res.data);
-      });
-  }, [])
+  const {data: usersData} = useFetch(constants.USERS_URL);
+  const {data: postsData} = useFetch(constants.POSTS_URL);
 
   const renderUsers = ({item}) => {
-    return <Item title={item.name} />
-  }
+    return <Item title={item.name} />;
+  };
 
   const renderPosts = ({item}) => {
-    return <PostItem title={item.title} body={item.body} />
-  }
+    return <PostItem title={item.title} body={item.body} />;
+  };
   const styles = StyleSheet.create({
     navBar: {
       backgroundColor: 'teal',
@@ -53,7 +44,7 @@ const HomeScreen = () => {
         <Text style={styles.sectionHeader}>Users</Text>
         <FlatList
           style={{padding: 10}}
-          data={data}
+          data={usersData}
           renderItem={renderUsers}
           keyExtractor={item => item.id}
         />
@@ -61,7 +52,7 @@ const HomeScreen = () => {
       <View>
         <Text style={styles.sectionHeader}>Posts</Text>
         <FlatList
-          data={posts}
+          data={postsData}
           renderItem={renderPosts}
           keyExtractor={item => item.id}
         />
