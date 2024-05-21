@@ -1,16 +1,14 @@
-import {View, Text} from 'react-native';
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import HomeScreen from '../screens/HomeScreen';
-import CartScreen from '../screens/CartScreen';
-import ProductsScreen from '../screens/ProductsScreen';
+import Home from '../screens/Home';
 import CartLogo from './CartLogo';
+import Products from '../screens/Products';
 
 const Tabs = () => {
   const Tab = createBottomTabNavigator();
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Home" component={Home} />
       <Tab.Screen
         options={{
           headerTitle: 'Products',
@@ -19,7 +17,7 @@ const Tabs = () => {
           ),
         }}
         name="Shop"
-        component={ProductsScreen}
+        component={Products}
       />
       {/* <Tab.Screen
         options={{tabBarIcon: () => <CartLogo size={18} />}}

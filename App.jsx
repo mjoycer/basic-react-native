@@ -2,14 +2,13 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Tabs from './src/components/Tabs';
-import ProductItem from './src/components/ProductItem';
-import ItemScreen from './src/screens/ItemScreen';
 import CartLogo from './src/components/CartLogo';
 import {Provider} from 'react-redux';
 import {persistor, store} from './src/redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
-import CartScreen from './src/screens/CartScreen';
+import CartScreen from './src/screens/Cart';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Item from './src/screens/Item'
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -36,7 +35,7 @@ const App = () => {
                 ),
               }}
               name="Product Details"
-              component={ItemScreen}
+              component={Item}
             />
             <Stack.Screen name='Cart' component={CartScreen} />
           </Stack.Navigator>

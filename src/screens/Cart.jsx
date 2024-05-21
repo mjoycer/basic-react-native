@@ -1,9 +1,8 @@
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import CartItem from '../components/CartItem';
 import CheckBox from '@react-native-community/checkbox';
-import {ADD_ITEM_TO_TOTAL} from '../redux/cartSlice';
 
 const CartScreen = () => {
   const cart = useSelector(state => state.cart.cart);
@@ -24,11 +23,13 @@ const CartScreen = () => {
     let total = 0;
     let quantity = 0;
 
-    checkedCart.forEach(item => {
-      let cartItem = cart.find(cartItem => cartItem.id === item.id);
-      total += cartItem.price * cartItem.quantity;
-      quantity += cartItem.quantity;
-    });
+    if(cart.length !== 0) {
+        checkedCart.forEach(item => {
+          let cartItem = cart.find(cartItem => cartItem.id === item.id);
+          total += cartItem.price * cartItem.quantity;
+          quantity += cartItem.quantity;
+        });
+    }
 
     setTotalPrice(total);
     setProductQuantity(quantity);
